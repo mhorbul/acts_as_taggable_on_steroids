@@ -196,7 +196,7 @@ module ActiveRecord #:nodoc:
           
           self.class.transaction do
             if old_tags.any?
-              taggings.find(:all, :conditions => ["tag_id IN (?)", old_tags.map(&:id)]).each(&:destroy)
+              Tagging.delete(taggings.find(:all, :conditions => ["tag_id IN (?)", old_tags.map(&:id)]).map(&:id))
               taggings.reset
             end
             
